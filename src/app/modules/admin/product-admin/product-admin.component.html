@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-container">
+                <form [formGroup]="formAddProduct" (ngSubmit)="onSubmitFormAddProduct()">
+                    <div class="form-group">
+                      <label for="branchId">Id de la sucursal:</label>
+                      <input type="text" class="form-control" id="branchId" formControlName="branchId">
+                    </div>
+                    <div class="form-group">
+                        <label for="productName">Nombre del producto:</label>
+                        <input type="text" class="form-control" id="productName" formControlName="productName">
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Descripción del producto:</label>
+                        <input type="text" class="form-control" id="productDescription" formControlName="productDescription">
+                    </div>
+                    <div class="form-group">
+                      <label for="productPrice">Precio:</label>
+                      <input type="number" class="form-control" id="productPrice" formControlName="productPrice">
+                    </div>
+                    <div class="form-group">
+                        <label for="productInventoryStock">Inventario a ingresar:</label>
+                        <input type="number" class="form-control" id="productInventoryStock" formControlName="productInventoryStock">
+                    </div>
+                    <div class="form-group">
+                        <label for="productCategory">Descripción del producto:</label>
+                        <input type="text" class="form-control" id="productCategory" formControlName="productCategory">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar producto</button>
+                  </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-container">
+                <h2 class="mb-4">Productos en stock</h2>
+                <ul *ngFor="let product of products; index as i" id="nombresLista" class="list-group">
+                    <app-product [product]="product"></app-product>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
