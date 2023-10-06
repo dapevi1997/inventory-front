@@ -36,6 +36,8 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getProducts();
     this.$websocket.initializeWebSocketConnection("productAdded");
+   
+
    this.subscriptionToAddProduct = this.$websocket.receiveMessages().subscribe((product) => {
       this.products.push(product);
       console.log(this.products)
