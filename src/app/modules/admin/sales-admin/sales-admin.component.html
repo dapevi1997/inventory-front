@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-container">
+                <form [formGroup]="formAddProductToCar" (ngSubmit)="onSubmitFormAddProductToCar()">
+                    <div class="form-group">
+                        <label for="branchId">Selecciona la surcursal:</label>
+                        <select class="form-control" id="branchId" formControlName="branchId">
+                            <option *ngFor="let branch of branchs; index as i" value="{{branch.branchId}}">{{branch.branchName}}</option>
+                          </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productSaleId">Producto:</label>
+                        <select class="form-control" id="productSaleId" formControlName="productSaleId">
+                            <option *ngFor="let product of products; index as i" value="{{product.productId}}">{{product.productName}}</option>
+                          </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productSaleStock">Cantidad:</label>
+                        <input type="number" class="form-control" id="productSaleStock" formControlName="productSaleStock">
+                    </div>
+       
+                    <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
+                  </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-container">
+                <h2 class="mb-4">Carrito</h2>
+                <ul *ngFor="let product of car; index as i" id="nombresLista" class="list-group">
+                    <app-product-in-car [productInCar]="product"></app-product-in-car>
+                </ul>
+                <button class="btn btn-primary" (click)="saveWholesale()">Hacer compra</button>
+            </div>
+        </div>
+    </div>
+</div>
+

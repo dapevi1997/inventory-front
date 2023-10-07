@@ -1,4 +1,5 @@
 export interface Product {
+    branchId: string
     productId: string
     productName: string
     productDescription: string

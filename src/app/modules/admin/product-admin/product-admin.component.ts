@@ -4,6 +4,8 @@ import { ProductService } from 'src/app/services/product.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WebsocketService } from 'src/app/services/websocket.service';
 import { Subscription } from 'rxjs';
+import { Branch } from 'src/app/interfaces/Branchs';
+import { BranchService } from 'src/app/services/branch.service';
 
 @Component({
   selector: 'app-product-admin',
@@ -13,14 +15,19 @@ import { Subscription } from 'rxjs';
 export class ProductAdminComponent implements OnInit, OnDestroy {
 
   products: Product[];
+  branchs: Branch[];
   formAddProduct: FormGroup;
   subscriptionToAddProduct!: Subscription;
+  
+
 
  
 
-  constructor(private $product: ProductService, private $formBuilder: FormBuilder, private $websocket: WebsocketService) {
+  constructor(private $product: ProductService, private $formBuilder: FormBuilder, 
+    private $websocket: WebsocketService, private $branch: BranchService) {
   
     this.products = [];
+    this.branchs = [];
    
     this.formAddProduct = this.$formBuilder.group({
       branchId: ['', Validators.required],
@@ -31,10 +38,13 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
       productCategory: ['', Validators.required],
     });
 
+
+
   }
 
   ngOnInit(): void {
     this.getProducts();
+    this.getBranchs();
     this.$websocket.initializeWebSocketConnection("productAdded");
    
 
@@ -49,6 +59,19 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
       this.subscriptionToAddProduct.unsubscribe();
   }
 
+  getBranchs() {
+    this.$branch.getAllBranch().subscribe(
+      {
+        next: (listBranchs) => {
+          this.branchs = listBranchs;
+        },
+        error: (e) => {
+          console.log(e)
+        },
+        complete: () => { },
+      }
+    );
+  }
 
   getProducts() {
     this.$product.getAllProduts().subscribe(
@@ -63,6 +86,7 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
       }
     );
   }
+
   onSubmitFormAddProduct() {
     if (this.formAddProduct.valid) {
       let body: BodyAddProduct = {
@@ -86,6 +110,14 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+ 
+
+
+  funciondePrueba(){
+    console.log(this.formAddProduct.value.branchId)
+    
   }
 
 

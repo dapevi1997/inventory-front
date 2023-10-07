@@ -4,8 +4,10 @@
             <div class="form-container">
                 <form [formGroup]="formAddProduct" (ngSubmit)="onSubmitFormAddProduct()">
                     <div class="form-group">
-                      <label for="branchId">Id de la sucursal:</label>
-                      <input type="text" class="form-control" id="branchId" formControlName="branchId">
+                        <label for="branchId">Selecciona la surcursal:</label>
+                        <select class="form-control" id="branchId" formControlName="branchId">
+                            <option *ngFor="let branch of branchs; index as i" value="{{branch.branchId}}">{{branch.branchName}}</option>
+                          </select>
                     </div>
                     <div class="form-group">
                         <label for="productName">Nombre del producto:</label>
@@ -24,7 +26,7 @@
                         <input type="number" class="form-control" id="productInventoryStock" formControlName="productInventoryStock">
                     </div>
                     <div class="form-group">
-                        <label for="productCategory">Descripción del producto:</label>
+                        <label for="productCategory">Categoría:</label>
                         <input type="text" class="form-control" id="productCategory" formControlName="productCategory">
                     </div>
                     <button type="submit" class="btn btn-primary">Agregar producto</button>
@@ -35,9 +37,15 @@
             <div class="form-container">
                 <h2 class="mb-4">Productos en stock</h2>
                 <ul *ngFor="let product of products; index as i" id="nombresLista" class="list-group">
-                    <app-product [product]="product"></app-product>
+                    <ng-container>
+                        <app-product [product]="product"></app-product>
+                    </ng-container>
+                   
                 </ul>
             </div>
         </div>
     </div>
 </div>
+
+
+

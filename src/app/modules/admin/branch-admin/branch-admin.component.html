@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-container">
+                <form [formGroup]="formAddBranch" (ngSubmit)="onSubmitFormAddBranch()">
+                    <div class="form-group">
+                      <label for="branchName">Nombre:</label>
+                      <input type="text" class="form-control" id="branchName" formControlName="branchName">
+                    </div>
+                    <div class="form-group">
+                        <label for="branchCountry">País:</label>
+                        <input type="text" class="form-control" id="branchCountry" formControlName="branchCountry">
+                    </div>
+                    <div class="form-group">
+                        <label for="branchCity">Ciudad:</label>
+                        <input type="text" class="form-control" id="branchCity" formControlName="branchCity">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar sucursal</button>
+                  </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-container">
+                <h2 class="mb-4">Sucursales</h2>
+                <ul *ngFor="let branch of branchs; index as i" id="nombresLista" class="list-group">
+                    <app-branch [branch]="branch"></app-branch>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
