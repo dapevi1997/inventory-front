@@ -5,16 +5,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminModule } from './modules/admin/admin.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginModule } from './modules/login/login.module';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AdminModule,
-    HttpClientModule
+    LoginModule,
+    HttpClientModule,
+    ReactiveFormsModule
    
   ],
   providers: [],

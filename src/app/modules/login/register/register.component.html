@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="card w-50 mx-auto">
+        <div class="card-header">
+            <h4 class="m-0 text-center">REGISTRO</h4>
+        </div>
+
+        <div class="card-body">
+            <form [formGroup]="form">
+                    Email:
+                    <input class="form-control mt-1 mb-2" type="text" formControlName="email">
+                    Password:
+                    <input class="form-control mt-1 mb-2" type="text" formControlName="password">
+                    Role:
+                    <input class="form-control mt-1 mb-4" type="text" formControlName="role">
+                    
+                <button class="btn btn-dark purple btn-block mb-4" (click)="register()">Registrar</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>

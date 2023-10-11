@@ -13,31 +13,31 @@ export class ProductService {
   constructor(private $httpClient: HttpClient) { }
 
   getAllProduts(): Observable <Products>{
-    let direction = environment.apiQueryService + 'api/v1/products';
+    let direction = window._env.HOST_8081 + 'api/v1/products';
 
     return this.$httpClient.get<Products>(direction);
   }
 
   getProdutById(idProduct:string): Observable <Product>{
-    let direction = environment.apiQueryService + 'api/v1/product/' + idProduct;
+    let direction = window._env.HOST_8081 + 'api/v1/product/' + idProduct;
 
     return this.$httpClient.get<Product>(direction);
   }
 
   addProduct(product: BodyAddProduct): Observable <any>{
-    let direction = environment.apiCommandService + 'api/v1/product/register';
+    let direction = window._env.HOST_8080 + 'api/v1/product/register';
 
     return this.$httpClient.post<any>(direction,product);
   }
 
   saveWholesale(sale: Sale): Observable <any>{
-    let direction = environment.apiCommandService + 'api/v1/sale/register/wholesale';
+    let direction = window._env.HOST_8080 + 'api/v1/sale/register/wholesale';
 
     return this.$httpClient.post<any>(direction,sale);
   }
 
   updateStock(idProduct: string, stock: number): Observable <any>{
-    let direction = environment.apiCommandService + 'api/v1/product/update';
+    let direction = window._env.HOST_8080 + 'api/v1/product/update';
 
     let body = {
       "idProduct": idProduct,

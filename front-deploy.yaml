@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+      - name: front
+        image: dapevi1997/front:ku
+        ports:
+        - containerPort: 80
+        env:
+        - name: HOST_8080
+          valueFrom:
+            configMapKeyRef:
+              name: service-urls
+              key: HOST_8080
+              optional: true
+        - name: HOST_8081
+          valueFrom:
+            configMapKeyRef:
+              name: service-urls
+              key: HOST_8081
+              optional: true
+        - name: HOST_8082
+          valueFrom:
+            configMapKeyRef:
+              name: service-urls
+              key: HOST_8082
+              optional: true
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-loadbalancer
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: front
