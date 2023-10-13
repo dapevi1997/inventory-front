@@ -13,7 +13,7 @@ export class WebsocketService {
   }
 
   initializeWebSocketConnection(idCorrelation: string) {
-    this.socket$ = webSocket("ws://" + window._env.HOST_8082 + `retrieve/${idCorrelation}`);
+    this.socket$ = webSocket("ws://" + environment.webSocketUrl + `retrieve/${idCorrelation}`);
   }
 
   sendMessage(message: string) {

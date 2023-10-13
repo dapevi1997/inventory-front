@@ -31,6 +31,8 @@ ngOnInit(): void {
   this.getBranchs()
   this.formChooseBranch.get('branchId')?.valueChanges.subscribe(
     (branchId: string) => {
+
+      console.log(branchId)
       
       if (branchId) {
         this.idSelectedBranch = branchId
@@ -60,6 +62,7 @@ getSalesByBranchId(){
   this.sale$.getSalesByBranchId(this.idSelectedBranch).subscribe(
     {
       next: (listSales) => {
+        console.log(listSales)
         this.salesDTO = listSales;
       },
       error: (e) => {

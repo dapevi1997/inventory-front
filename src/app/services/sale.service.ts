@@ -12,7 +12,7 @@ export class SaleService {
   constructor(private $httpClient: HttpClient) { }
 
   getSalesByBranchId(branchId: string): Observable <SalesDTO>{
-    let direction = window._env.HOST_8081 + 'api/v1/sales/' + branchId;
+    let direction = environment.apiQueryService + 'api/v1/sales/' + branchId;
 
     return this.$httpClient.get<SalesDTO>(direction);
   }

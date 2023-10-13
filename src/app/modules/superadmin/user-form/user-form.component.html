@@ -1,0 +1,78 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form [formGroup]="formUserSave">
+                <div class="mb-3">
+                    <input type="text" class="form-control" aria-describedby="emailHelp" formControlName="userName"
+                        placeholder="Nombre del usuario" />
+                    <div *ngIf="formUserSave.get('userName')?.hasError('required') && formUserSave.pristine === false" style="color: red;">El Nombre
+                        de usuario es requerido</div>
+                    <!-- <div *ngIf="form.get('email')?.hasError('email') && form.pristine === false" style="color: red;">Ingrese email
+                        válido
+                    </div> -->
+                </div>
+            
+                <div class="mb-3">
+                    <input type="text" class="form-control" aria-describedby="emailHelp" formControlName="userLastName"
+                        placeholder="Apellido del usuario" />
+                    <div *ngIf="formUserSave.get('userLastName')?.hasError('required') && formUserSave.pristine === false" style="color: red;">
+                        El apellido es requerido</div>
+                </div>
+            
+                <div class="mb-3">
+                    <input type="password" class="form-control" aria-describedby="emailHelp" formControlName="userPassword"
+                        placeholder="Contraseña" />
+                    <div *ngIf="formUserSave.get('userPassword')?.hasError('required') && formUserSave.pristine === false" style="color: red;">
+                        La contraseña es requerida</div>
+                </div>
+            
+                <div class="mb-3">
+                    <input type="email" class="form-control" aria-describedby="emailHelp" formControlName="userEmail"
+                        placeholder="Email" />
+                    <div *ngIf="formUserSave.get('userEmail')?.hasError('required') && formUserSave.pristine === false" style="color: red;">
+                        El email es requerido</div>
+                </div>
+            
+                <div class="mb-3">
+                    <select class="form-control" id="userRole" formControlName="userRole">
+                        <option value="" disabled selected>Selecciona un rol</option>
+                        <option *ngFor="let rol of roles; index as i" value="{{rol}}">{{rol}}</option>
+                      </select>
+                 
+                    <div *ngIf="formUserSave.get('userRole')?.hasError('required') && formUserSave.pristine === false" style="color: red;">
+                        El rol es requerido</div>
+                </div>
+            
+                <div class="mb-3">
+                    <select class="form-control" id="branchId" formControlName="branchId">
+                        <option *ngFor="let branch of branchs; index as i" value="{{branch.branchId}}">{{branch.branchName}}</option>
+                      </select>
+                    <div *ngIf="formUserSave.get('userRole')?.hasError('required') && formUserSave.pristine === false" style="color: red;">
+                        El rol es requerido</div>
+                </div>
+            
+              
+            
+            
+            
+                <button type="submit" label="Iniciar" class="btn btn-dark purple btn-block mb-2" [disabled]="!formUserSave.valid"
+                    (click)="guardarUsuario()">
+                    Registrar
+                </button>
+            
+                <!-- <p class="m-0 text-center"> <a href="" routerLink="/register">Registro</a></p> -->
+            
+                <!-- <div>
+                            <button type="button" label="Google" style="margin-bottom: 10px;">Google</button>
+                        </div> -->
+                <!-- <p class="m-0 text-center"> <a href="" data-bs-toggle="modal" data-bs-target="#idRecoverPasswordWithEmail">Olvidé mi contraseña</a></p> -->
+            
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+

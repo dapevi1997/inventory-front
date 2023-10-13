@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-admin',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class NavbarAdminComponent {
 
+  constructor(private router$: Router){
+
+  }
+
+  logout(){
+    localStorage.removeItem("token");
+    this.router$.navigate(['/login']);
+  }
 }

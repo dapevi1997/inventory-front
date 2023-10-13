@@ -8,6 +8,7 @@ import { ProductInCar, ProductSale } from 'src/app/interfaces/ProductSale';
 import { filter, map, Observable } from 'rxjs';
 import { Sale } from 'src/app/interfaces/Sales';
 import { ProductSalesUtil } from '../../../interfaces/Sales';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sales-admin',
@@ -22,7 +23,8 @@ export class SalesAdminComponent implements OnInit, OnDestroy{
   car: ProductInCar[];
   idSelectedBranch: string;
 
-  constructor(private $formBuilder: FormBuilder,private branch$: BranchService, private product$: ProductService){
+  constructor(private $formBuilder: FormBuilder,private branch$: BranchService, private product$: ProductService,
+    private toastr$: ToastrService){
     this.idSelectedBranch = "";
     this.products = [];
     this.branchs = [];
@@ -163,6 +165,8 @@ export class SalesAdminComponent implements OnInit, OnDestroy{
       {
         next: (sale) => {
           console.log("Venta registrada")
+          this.toastr$.success('Venta registrada!');
+
          
         },
         error: (e) => {

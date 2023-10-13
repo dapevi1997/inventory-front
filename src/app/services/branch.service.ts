@@ -13,10 +13,7 @@ export class BranchService {
   constructor(private $httpClient: HttpClient) { }
 
   getAllBranch(): Observable <Branchs>{
-    console.log( "HOST8081: " + window._env.HOST_8081)
-    console.log( "HOST8080: " + window._env.HOST_8080)
-    console.log( "HOST8082: " + window._env.HOST_8082)
-    let direction = window._env.HOST_8081 + 'api/v1/branchs';
+    let direction = environment.apiQueryService + 'api/v1/branchs';
 
   
 
@@ -24,7 +21,7 @@ export class BranchService {
   }
 
   addBranch(branch: BodyAddBranch): Observable <any>{
-    let direction = window._env.HOST_8080 + 'api/v1/branch/register';
+    let direction = environment.apiCommandService + 'api/v1/branch/register';
 
     return this.$httpClient.post<any>(direction,branch);
   }

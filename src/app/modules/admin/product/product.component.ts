@@ -28,7 +28,7 @@ export class ProductComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
       this.subscriptionToUpdatedProduct.unsubscribe();
   }
-  addStock(){
+  addStock(productId: string){
     const respuesta = window.prompt('Ingrese el stock a añadir: ')
 
 
@@ -36,7 +36,7 @@ export class ProductComponent implements OnInit, OnDestroy{
     if (respuesta !== null) {
       const stock:number = parseInt(respuesta);
 
-      this.$product.updateStock(this.product.productId,stock).subscribe(
+      this.$product.updateStock(productId,stock).subscribe(
         {
           next: (product) => {
             console.log(product)
