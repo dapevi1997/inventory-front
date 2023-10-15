@@ -4,6 +4,8 @@ import { BodyAddBranch, Branch } from 'src/app/interfaces/Branchs';
 import { BranchService } from 'src/app/services/branch.service';
 import { WebsocketService } from 'src/app/services/websocket.service';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-branch-admin',
@@ -15,7 +17,8 @@ export class BranchAdminComponent implements OnInit, OnDestroy{
   branchs: Branch[];
   subscriptionToAddBranch!: Subscription;
 
-  constructor(private $branch: BranchService, private $formBuilder: FormBuilder, private $websocket: WebsocketService){
+  constructor(private $branch: BranchService, private $formBuilder: FormBuilder, private $websocket: WebsocketService,
+    private toastr$: ToastrService, private router$: Router){
 
     this.branchs = [];
 
@@ -49,7 +52,11 @@ export class BranchAdminComponent implements OnInit, OnDestroy{
           this.branchs = listBranchs;
         },
         error: (e) => {
-          console.log(e)
+          if(e.error === 'JWTExpired'){
+            localStorage.removeItem("token");
+            this.toastr$.error('Sesión expirada');
+            this.router$.navigate(['/login']);
+          }
         },
         complete: () => { },
       }
@@ -70,7 +77,11 @@ export class BranchAdminComponent implements OnInit, OnDestroy{
             console.log(product);
           },
           error: (e) => {
-            console.log(e)
+            if(e.error === 'JWTExpired'){
+              localStorage.removeItem("token");
+              this.toastr$.error('Sesión expirada');
+              this.router$.navigate(['/login']);
+            }
           },
           complete: () => { },
         }

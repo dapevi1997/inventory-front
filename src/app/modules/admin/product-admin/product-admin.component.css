@@ -15,3 +15,14 @@
         background-color: #ffffff;
         border: 1px solid #dee2e6;
     }
+
+    .gradient {
+        background: linear-gradient(to bottom, #f5f5f5, #e0e0e0);
+        height: 90vh;
+        width: 100%;
+      }
+
+      .scrollable-list {
+        max-height: 600px; /* Establece la altura máxima a la que se mostrará la lista antes de aparecer la barra de desplazamiento */
+        overflow-y: auto; /* Agrega la barra de desplazamiento vertical cuando la lista excede la altura máxima */
+      }

@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Gestión de inventarios</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-right: 0%  ; margin-right: 0%;">
+    <a class="navbar-brand">Gestión de inventarios</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,11 +10,11 @@
           <a class="nav-link" routerLink="/superadmin">Usuarios</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/branchs">Sucursales</a>
-        </li>
-        <li class="nav-item" style="float: right;">
-          <a class="nav-link" (click)="logout()" routerLink="/login">Salir</a>
+          <a class="nav-link" routerLink="/superadmin/branchs">Sucursales</a>
         </li>
       </ul>
+     
+
     </div>
+    <a class="nav-link" style="margin-right: 1%;" (click)="logout()" routerLink="/login">Salir</a>
   </nav>

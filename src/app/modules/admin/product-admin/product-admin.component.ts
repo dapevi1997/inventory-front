@@ -6,6 +6,8 @@ import { WebsocketService } from 'src/app/services/websocket.service';
 import { Subscription } from 'rxjs';
 import { Branch } from 'src/app/interfaces/Branchs';
 import { BranchService } from 'src/app/services/branch.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-admin',
@@ -24,7 +26,8 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
  
 
   constructor(private $product: ProductService, private $formBuilder: FormBuilder, 
-    private $websocket: WebsocketService, private $branch: BranchService) {
+    private $websocket: WebsocketService, private $branch: BranchService, 
+    private toastr$: ToastrService, private router$: Router) {
   
     this.products = [];
     this.branchs = [];
@@ -66,7 +69,11 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
           this.branchs = listBranchs;
         },
         error: (e) => {
-          console.log(e)
+          if(e.error === 'JWTExpired'){
+            localStorage.removeItem("token");
+            this.toastr$.error('Sesión expirada');
+            this.router$.navigate(['/login']);
+          }
         },
         complete: () => { },
       }
@@ -80,7 +87,11 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
           this.products = listProduts;
         },
         error: (e) => {
-          console.log(e)
+          if(e.error === 'JWTExpired'){
+            localStorage.removeItem("token");
+            this.toastr$.error('Sesión expirada');
+            this.router$.navigate(['/login']);
+          }
         },
         complete: () => { },
       }

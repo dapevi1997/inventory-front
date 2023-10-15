@@ -1,43 +1,69 @@
 <app-navbar-admin></app-navbar-admin>
-<div class="container">
+<div class="container gradient">
     <div class="row">
         <div class="col-md-6">
             <div class="form-container">
                 <form [formGroup]="formAddProduct" (ngSubmit)="onSubmitFormAddProduct()">
-                    <div class="form-group">
-                        <label for="branchId">Selecciona la surcursal:</label>
-                        <select class="form-control" id="branchId" formControlName="branchId">
+                    <h2 class="mb-4">Agregar un producto</h2>
+
+                    <div class="mb-3">
+                        <select class="form-select" id="branchId" formControlName="branchId">
+                            <option value="" disabled selected>Selecciona una sucursal</option>
                             <option *ngFor="let branch of branchs; index as i" value="{{branch.branchId}}">{{branch.branchName}}</option>
                           </select>
+                        <div *ngIf="formAddProduct.get('userRole')?.hasError('required') && formAddProduct.pristine === false" style="color: red;">
+                            La sucursal es requerida</div>
                     </div>
-                    <div class="form-group">
-                        <label for="productName">Nombre del producto:</label>
-                        <input type="text" class="form-control" id="productName" formControlName="productName">
+
+                    <div class="mb-3">
+                        <input type="text" class="form-control" aria-describedby="emailHelp" formControlName="productName"
+                            placeholder="Nombre del producto" />
+                        <div *ngIf="formAddProduct.get('productName')?.hasError('required') && formAddProduct.pristine === false" style="color: red;">
+                            El nombre es requerido</div>
                     </div>
-                    <div class="form-group">
-                        <label for="productDescription">Descripción del producto:</label>
-                        <input type="text" class="form-control" id="productDescription" formControlName="productDescription">
+
+                    <div class="mb-3">
+                        <input type="text" class="form-control" aria-describedby="emailHelp" formControlName="productDescription"
+                            placeholder="Descripción del producto" />
+                        <div *ngIf="formAddProduct.get('productDescription')?.hasError('required') && formAddProduct.pristine === false" style="color: red;">
+                            La descripción es requerida</div>
                     </div>
-                    <div class="form-group">
-                      <label for="productPrice">Precio:</label>
-                      <input type="number" class="form-control" id="productPrice" formControlName="productPrice">
+
+                    <div class="mb-3">
+                        <input type="number" class="form-control" aria-describedby="emailHelp" formControlName="productPrice"
+                            placeholder="Precio del producto" />
+                        <div *ngIf="formAddProduct.get('productPrice')?.hasError('required') && formAddProduct.pristine === false" style="color: red;">
+                            El precio es requerido</div>
                     </div>
-                    <div class="form-group">
-                        <label for="productInventoryStock">Inventario a ingresar:</label>
-                        <input type="number" class="form-control" id="productInventoryStock" formControlName="productInventoryStock">
+
+                    <div class="mb-3">
+                        <input type="number" class="form-control" aria-describedby="emailHelp" formControlName="productInventoryStock"
+                            placeholder="inventario a ingresar" />
+                        <div *ngIf="formAddProduct.get('productInventoryStock')?.hasError('required') && formAddProduct.pristine === false" style="color: red;">
+                            El inventario es requerido</div>
                     </div>
-                    <div class="form-group">
-                        <label for="productCategory">Categoría:</label>
-                        <input type="text" class="form-control" id="productCategory" formControlName="productCategory">
+
+                    <div class="mb-3">
+                        <input type="text" class="form-control" aria-describedby="emailHelp" formControlName="productCategory"
+                            placeholder="Categoría del producto" />
+                        <div *ngIf="formAddProduct.get('productCategory')?.hasError('required') && formAddProduct.pristine === false" style="color: red;">
+                            La categoría es requerida</div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Agregar producto</button>
+
+                    <button type="submit" label="Iniciar" class="btn btn-dark purple btn-block mb-2" [disabled]="!formAddProduct.valid"
+                    >
+                    Agregar
+                </button>
+
+
                   </form>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-container">
-                <h2 class="mb-4">Productos en stock</h2>
-                <ul *ngFor="let product of products; index as i" id="nombresLista" class="list-group">
+            <h2 class="mb-4">Productos en stock</h2>
+            <div class="scrollable-list">
+               
+                <ul *ngFor="let product of products; index as i" id="nombresLista" class="list-group scrollable-list" style="width: 100%;">
                     <ng-container>
                         <app-product [product]="product"></app-product>
                     </ng-container>

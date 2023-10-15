@@ -1,6 +1,6 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Gestión de inventarios</a>
+    <a class="navbar-brand" >Gestión de inventarios</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,9 +10,14 @@
         <li class="nav-item" style="float: right;">
             <a class="nav-link"  routerLink="/sales/view-sales">Ver todas las ventas hechas</a>
           </li>
-        <li class="nav-item" style="float: right;">
-          <a class="nav-link" (click)="logout()" routerLink="/login">Salir</a>
-        </li>
+          <li class="nav-item" style="float: right;">
+            <a class="nav-link"  routerLink="#">Agregar desde excel</a>
+          </li>
+
       </ul>
+     
+       
+     
     </div>
+    <a class="nav-link" style="margin-right: 1%;" (click)="logout()" routerLink="/login">Salir</a>
   </nav>

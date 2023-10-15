@@ -5,6 +5,7 @@ import { Branch } from 'src/app/interfaces/Branchs';
 import { UserService } from 'src/app/services/user.service';
 import { SaveUserBody } from 'src/app/interfaces/User';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-form',
@@ -16,7 +17,7 @@ export class UserFormComponent implements OnInit{
   branchs: Branch[];
   roles:string[];
 
-  constructor(private $branch: BranchService, private user$: UserService, private toastr$: ToastrService){
+  constructor(private $branch: BranchService, private user$: UserService, private toastr$: ToastrService, private router$: Router){
     this.branchs = [];
     this.roles = ["ROLE_SUPERADMIN", "ROLE_ADMIN", "ROLE_USER"];
 
@@ -24,14 +25,15 @@ export class UserFormComponent implements OnInit{
       userName: new FormControl(null, [Validators.required]),
       userLastName: new FormControl(null, [Validators.required]),
       userPassword: new FormControl(null, [Validators.required]),
-      userEmail: new FormControl(null, [Validators.required]),
-      userRole: new FormControl(null, [Validators.required]),
-      branchId: new FormControl(null, [Validators.required]),
+      userEmail: new FormControl(null, [Validators.required, Validators.email]),
+      userRole: new FormControl("", [Validators.required]),
+      branchId: new FormControl("", [Validators.required]),
     });
   }
 
   ngOnInit(): void {
       this.getBranchs();
+
   }
 
   getBranchs() {
@@ -41,9 +43,19 @@ export class UserFormComponent implements OnInit{
           this.branchs = listBranchs;
         },
         error: (e) => {
-          console.log(e)
+          if(e.error === 'JWTExpired'){
+            localStorage.removeItem("token");
+            this.toastr$.error('Sesión expirada');
+            this.router$.navigate(['/login']);
+          }
         },
-        complete: () => { },
+        complete: () => { 
+          if(this.branchs.length === 0){
+            console.log(this.branchs.length)
+            this.toastr$.warning('Al parecer no se han creado sucursales aún');
+    
+          }
+        },
       }
     );
   }
@@ -62,11 +74,17 @@ export class UserFormComponent implements OnInit{
     this.user$.saveUser(body).subscribe(
       {
         next: (aswer) => {
-          console.log(aswer);
+      
           this.toastr$.success('Usuario registrado!');
+          window.location.reload();
+
         },
         error: (e) => {
-          console.log(e)
+          if(e.error === 'JWTExpired'){
+            localStorage.removeItem("token");
+            this.toastr$.error('Sesión expirada');
+            this.router$.navigate(['/login']);
+          }
         },
         complete: () => { },
       }

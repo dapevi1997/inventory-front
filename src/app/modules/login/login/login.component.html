@@ -1,82 +1,31 @@
-<nav class="navbar bg-body-tertiary" style="background-color: #13118a">
-    <div class="container-fluid" style="margin-left: 40%;">
-      <h1 class="navbar-brand" style="color: rgb(178, 30, 30);">Gestión de inventarios</h1>
-    </div>
-  </nav>
-  <br><br>
-  <div class="container">
-    <div class="card w-50 mx-auto">
-      <div class="card-header">
-        <h4 class="m-0 text-center">LOGIN</h4>
+  <div class="login-container">
+    <form [formGroup]="form" class="login-form" autocomplete="on">
+      <h2 class="mb-4">Gestión de inventarios</h2>
+      <div class="mb-3">
+        <input type="email" class="form-control" aria-describedby="emailHelp" formControlName="email"
+          placeholder="Correo electrónico" />
+        <div *ngIf="form.get('email')?.hasError('required') && form.pristine === false" style="color: red;">El email
+          es requerido</div>
+        <div *ngIf="form.get('email')?.hasError('email') && form.pristine === false" style="color: red;">Ingrese email
+          válido</div>
       </div>
-      <div class="card-body">
-        <form [formGroup]="form">
-          <div class="mb-3">
-            <input type="email" class="form-control" aria-describedby="emailHelp" formControlName="email"
-              placeholder="Correo electrónico" />
-            <div *ngIf="form.get('email')?.hasError('required') && form.pristine === false" style="color: red;">El email
-              es requerido</div>
-            <div *ngIf="form.get('email')?.hasError('email') && form.pristine === false" style="color: red;">Ingrese email
-              válido</div>
-          </div>
-  
-          <div class="mb-3">
-            <input type="password" class="form-control" aria-describedby="emailHelp" formControlName="password"
-              placeholder="Contraseña" />
-            <div *ngIf="form.get('password')?.hasError('required') && form.pristine === false" style="color: red;">
-              Contraseña es requerida</div>
-          </div>
-          <button type="submit" label="Iniciar" class="btn btn-dark purple btn-block mb-2" [disabled]="!form.valid"
-            (click)="login()">
-            Entrar
-          </button>
 
-          <!-- <p class="m-0 text-center"> <a href="" routerLink="/register">Registro</a></p> -->
-  
-          <!-- <div>
-                      <button type="button" label="Google" style="margin-bottom: 10px;">Google</button>
-                  </div> -->
-          <!-- <p class="m-0 text-center"> <a href="" data-bs-toggle="modal" data-bs-target="#idRecoverPasswordWithEmail">Olvidé mi contraseña</a></p> -->
-  
-        </form>
+      <div class="mb-3">
+        <input type="password" class="form-control" aria-describedby="emailHelp" formControlName="password"
+          placeholder="Contraseña" />
+        <div *ngIf="form.get('password')?.hasError('required') && form.pristine === false" style="color: red;">
+          Contraseña es requerida</div>
       </div>
-      <div></div>
-    </div>
+      <button type="submit" label="Iniciar" class="btn btn-dark purple btn-block mb-2" [disabled]="!form.valid"
+        (click)="login()">
+        Iniciar sesión
+      </button>
+
+    </form>
+
   </div>
-  
-  
-  <div class="modal fade" id="idRecoverPasswordWithEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Recuperar contraseña</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <h6>Se enviará un email a la dirección suministrada para recuperar la contraseña</h6>
-  
-          <form [formGroup]="formRecoverPasswordWithEmail">
-            <div class="mb-3">
-              <input type="email" class="form-control" aria-describedby="emailHelp" formControlName="email"
-                placeholder="Correo electrónico" />
-              <div *ngIf="formRecoverPasswordWithEmail.get('email')?.hasError('required') && formRecoverPasswordWithEmail.pristine === false" style="color: red;">El email
-                es requerido</div>
-              <div *ngIf="formRecoverPasswordWithEmail.get('email')?.hasError('email') && formRecoverPasswordWithEmail.pristine === false" style="color: red;">Ingrese email
-                válido</div>
-            </div>
-  
-          </form>
-  
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-dark purple btn-block mb-2" [disabled]="!formRecoverPasswordWithEmail.valid" (click)="updatePasswordWithEmail()" data-bs-dismiss="modal">Recuperar</button>
-  
-        </div>
-  
-      </div>
-    </div>
-  
-  </div>
+
+
+
 
 

@@ -4,6 +4,7 @@ import { BodyLogin, AnswerLogin } from '../../../interfaces/Auth';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,10 @@ export class LoginComponent implements OnInit{
     
   }
 
+  prueba(){
+    this.toastr$.success("Hola")
+  }
+
 
 
   async login() {
@@ -46,14 +51,24 @@ export class LoginComponent implements OnInit{
       password: password
     }
 
-    await this.auth$.login(bodyLogin).subscribe(
+     this.auth$.login(bodyLogin)
+     .pipe(
+      catchError(error => {
+        if (error.status == 400){
+          this.toastr$.error('¡Usuario o contraseña incorrectos!');
+          console.log("Usuario no encontrado")
+        }
+        return throwError(error);
+      })
+     )
+     .subscribe(
       {
         next: (asnswer: AnswerLogin) => {
           console.log(asnswer.token)
           if(asnswer.token !== "" && asnswer.role !== null && asnswer.role === "ROLE_SUPERADMIN"){
             localStorage.setItem("token", asnswer.token)
 
-            this.toastr$.success('¡Bienvenido!');
+            this.toastr$.success('¡Bienvenido! Eres un usuario SUPERADMIN');
 
             this.router$.navigate(['/superadmin']);
 
@@ -63,9 +78,9 @@ export class LoginComponent implements OnInit{
           if(asnswer.token !== "" && asnswer.role !== null && asnswer.role === "ROLE_ADMIN"){
             localStorage.setItem("token", asnswer.token)
 
-            this.toastr$.success('¡Bienvenido!');
+            this.toastr$.success('¡Bienvenido! Eres un usuario ADMIN');
 
-            this.router$.navigate(['/products']);
+            this.router$.navigate(['/adm/products']);
 
 
           }

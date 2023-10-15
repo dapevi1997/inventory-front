@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeSuperadminComponent } from './home-superadmin/home-superadmin.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import { BranchAdminComponent } from '../admin/branch-admin/branch-admin.component';
 
 
 
@@ -13,21 +14,10 @@ const routes: Routes = [
     {
       path:"", component:UserFormComponent
      },
-
-    // {
-    //   path:"list-radars", component: ListaRadaresComponent
-    // },
-    // {
-    //   path:"radar-especifico", component: RadarEspecificoComponent
-    // },
-    // {
-    //      path:"promedios",
-    //      component: PromediosComponent
-    // },
-    // {
-    //      path:"grafica",
-    //      component: GraficaComponent
-    // },
+     {
+      path:"branchs", component:BranchAdminComponent
+     },
+    
   ]
   },
 ];

@@ -6,7 +6,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{product.productName}}</h5>
                         <p class="card-text">Descripción: {{product.productDescription}}</p>
-                        <p class="card-text">Precio: {{product.productPrice}}</p>
+                        <p class="card-text">Precio: {{product.productPrice | currency: 'COP':'symbol':'1.0-0'}}</p>
                         <p class="card-text">Unidades: {{product.productInventoryStock}}</p>
                         <p class="card-text">Categoría: {{product.productCategory}}</p>
                         <button class="btn btn-primary" (click)="addStock(product.productId)">Modificar inventario</button>

@@ -1,32 +1,41 @@
-<div class="container">
-    <div class="row">
+<div class="gradient">
+    <div class="row" style="width: 100%;">
         <div class="col-md-6">
-            <div class="form-container">
-                <form [formGroup]="formAddBranch" (ngSubmit)="onSubmitFormAddBranch()">
-                    <div class="form-group">
-                      <label for="branchName">Nombre:</label>
-                      <input type="text" class="form-control" id="branchName" formControlName="branchName">
-                    </div>
-                    <div class="form-group">
-                        <label for="branchCountry">País:</label>
-                        <input type="text" class="form-control" id="branchCountry" formControlName="branchCountry">
-                    </div>
-                    <div class="form-group">
-                        <label for="branchCity">Ciudad:</label>
-                        <input type="text" class="form-control" id="branchCity" formControlName="branchCity">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Agregar sucursal</button>
-                  </form>
-            </div>
+            <form class="login-form" [formGroup]="formAddBranch" (ngSubmit)="onSubmitFormAddBranch()">
+                <h3 class="mb-4">Registrar sucursal</h3>
+                <div class="mb-3">
+                    <input type="text" class="form-control" aria-describedby="emailHelp" formControlName="branchName"
+                      placeholder="Nombre" />
+                    <div *ngIf="formAddBranch.get('branchName')?.hasError('required') && formAddBranch.pristine === false" style="color: red;">
+                      El nombre es requerido</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <input type="text" class="form-control" aria-describedby="emailHelp" formControlName="branchCountry"
+                      placeholder="País" />
+                    <div *ngIf="formAddBranch.get('branchCountry')?.hasError('required') && formAddBranch.pristine === false" style="color: red;">
+                      El país es requerido</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <input type="text" class="form-control" aria-describedby="emailHelp" formControlName="branchCity"
+                      placeholder="Ciudad" />
+                    <div *ngIf="formAddBranch.get('branchCity')?.hasError('required') && formAddBranch.pristine === false" style="color: red;">
+                      La ciudad es requerida</div>
+                  </div>
+       
+                <button type="submit" class="btn btn-primary">Agregar sucursal</button>
+            </form>
         </div>
-        <div class="col-md-6">
-            <div class="form-container">
-                <h2 class="mb-4">Sucursales</h2>
+        <div class="col-md-6" style="height: 50vh;">
+            <h3 class="mb-4" style="margin-left: 15%;">Sucursales</h3>
+            <div class="scrollable-list">
+                
                 <ul *ngFor="let branch of branchs; index as i" id="nombresLista" class="list-group">
                     <app-branch [branch]="branch"></app-branch>
                 </ul>
             </div>
         </div>
     </div>
-</div>
 
+</div>
