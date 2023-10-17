@@ -11,7 +11,7 @@
                             <option value="" disabled selected>Selecciona una sucursal</option>
                             <option *ngFor="let branch of branchs; index as i" value="{{branch.branchId}}">{{branch.branchName}}</option>
                           </select>
-                        <div *ngIf="formAddProduct.get('userRole')?.hasError('required') && formAddProduct.pristine === false" style="color: red;">
+                        <div *ngIf="formAddProduct.get('branchId')?.hasError('required') && formAddProduct.pristine === false" style="color: red;">
                             La sucursal es requerida</div>
                     </div>
 
@@ -48,6 +48,7 @@
                             placeholder="Categoría del producto" />
                         <div *ngIf="formAddProduct.get('productCategory')?.hasError('required') && formAddProduct.pristine === false" style="color: red;">
                             La categoría es requerida</div>
+                          
                     </div>
 
                     <button type="submit" label="Iniciar" class="btn btn-dark purple btn-block mb-2" [disabled]="!formAddProduct.valid"
@@ -58,6 +59,11 @@
 
                   </form>
             </div>
+            <br>
+            <label for="customFileInput" class="custom-file-label">Agregar productos desde excel</label>
+            <input type="file" id="customFileInput" style="margin-left: 10px;" (change)="addFromExcel($event)" />
+            
+                    
         </div>
         <div class="col-md-6">
             <h2 class="mb-4">Productos en stock</h2>

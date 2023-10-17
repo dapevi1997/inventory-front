@@ -30,11 +30,6 @@ export class ProductService {
     return this.$httpClient.post<any>(direction,product);
   }
 
-  saveWholesale(sale: Sale): Observable <any>{
-    let direction = environment.apiCommandService + 'api/v1/sale/register/wholesale';
-
-    return this.$httpClient.post<any>(direction,sale);
-  }
 
   updateStock(idProduct: string, stock: number): Observable <any>{
     let direction = environment.apiCommandService + 'api/v1/product/update';

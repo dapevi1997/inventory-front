@@ -31,14 +31,17 @@ export class BranchAdminComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
       this.getBranchs();
-      this.$websocket.initializeWebSocketConnection("branchAdded");
+      
 
-      this.subscriptionToAddBranch = this.$websocket.receiveMessages().subscribe((branch) => {
-        console.log(branch)
-        this.branchs.push(branch);
-        
-  
-      });
+      this.subscriptionToAddBranch = this.$websocket.initializeWebSocketConnection("branchAdded").subscribe(
+        (branch) => {
+       
+          this.branchs.push(branch);
+          
+    
+        }
+      );
+
   }
 
   ngOnDestroy(): void {
@@ -74,7 +77,7 @@ export class BranchAdminComponent implements OnInit, OnDestroy{
       this.$branch.addBranch(body).subscribe(
         {
           next: (product) => {
-            console.log(product);
+          
           },
           error: (e) => {
             if(e.error === 'JWTExpired'){

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { ProductSalesUtil } from 'src/app/interfaces/Sales';
 
 @Component({
   selector: 'app-product',
@@ -16,24 +17,52 @@ export class ProductComponent implements OnInit, OnDestroy{
   @Input() product!: Product;
   subscriptionToUpdatedProduct!: Subscription;
   subscriptionToUpdatedStock!: Subscription;
+  subscriptionToWholeSale!: Subscription;
+  subscriptionToRetail!: Subscription;
 
   constructor(private $websocket: WebsocketService, private $product: ProductService,
     private toastr$: ToastrService, private router$: Router){
   }
   ngOnInit(): void {
-    this.$websocket.initializeWebSocketConnection("productUpdated");
-    this.subscriptionToUpdatedProduct = this.$websocket.receiveMessages().subscribe((product) => {
 
-      if (product.idProduct === this.product.productId){
-        this.product.productInventoryStock = product.productInventoryStock;
-      }
-
-    
-
+    this.subscriptionToUpdatedProduct = this.$websocket.initializeWebSocketConnection("productUpdated")
+    .subscribe((product)=>{
+                 if (product.idProduct === this.product.productId){
+         this.product.productInventoryStock = product.productInventoryStock;
+       }
     });
+
+    this.subscriptionToWholeSale = this.$websocket.initializeWebSocketConnection("wholeSale").subscribe( (listProducts: ProductSalesUtil[])=>{
+          listProducts.forEach(produc=>{
+         if(produc.productSaleId === this.product.productId){
+
+              this.product.productInventoryStock = this.product.productInventoryStock - produc.productSaleStock;
+         }
+
+      }
+    )});
+
+    this.subscriptionToRetail = this.$websocket.initializeWebSocketConnection("retail").subscribe( (listProducts: ProductSalesUtil[])=>{
+      listProducts.forEach(produc=>{
+     if(produc.productSaleId === this.product.productId){
+
+          this.product.productInventoryStock = this.product.productInventoryStock - produc.productSaleStock;
+     }
+
+  }
+)});
+
+
+
+
+
+
   }
   ngOnDestroy(): void {
       this.subscriptionToUpdatedProduct.unsubscribe();
+      this.subscriptionToWholeSale.unsubscribe();
+      this.subscriptionToRetail.unsubscribe();
+      //this.subscriptionToUpdatedStock.unsubscribe();
   }
 
 

@@ -17,4 +17,10 @@ export class UserService {
 
     return this.$httpClient.post<any>(direction,body);
   }
+
+  findUserByEmail(email:string){
+    let direction = environment.apiQueryService + 'api/v1/user/' + email;
+    return this.$httpClient.get(direction);
+  }
+
 }

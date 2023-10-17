@@ -6,6 +6,8 @@ import { UserService } from 'src/app/services/user.service';
 import { SaveUserBody } from 'src/app/interfaces/User';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { timer } from 'rxjs';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-user-form',
@@ -71,15 +73,52 @@ export class UserFormComponent implements OnInit{
       userRole: this.formUserSave.value.userRole
     }
 
-    this.user$.saveUser(body).subscribe(
+    this.user$.findUserByEmail(this.formUserSave.value.userEmail).subscribe(
       {
-        next: (aswer) => {
+        next: (user) => {
       
-          this.toastr$.success('Usuario registrado!');
-          window.location.reload();
+
+          if(user !== null){
+            this.toastr$.error('Ya existe un usuario con este email');
+          } else {
+
+           this.user$.saveUser(body).subscribe(
+              {
+                next: (aswer) => {
+              
+       
+        
+                },
+                error: (e) => {
+
+                  if(e.error === 'JWTExpired'){
+                    localStorage.removeItem("token");
+                    this.toastr$.error('Sesión expirada');
+                    this.router$.navigate(['/login']);
+                  }else{
+                    this.toastr$.error(e.message);
+                  }
+                },
+                complete: () => { 
+                  this.toastr$.success('¡Usuario registrado!');
+                  timer(3000).subscribe(()=>{
+                    window.location.reload();
+                  });
+                },
+              }
+            );
+
+      
+          }
+      
+   
+         
 
         },
         error: (e) => {
+          if(e.code == 404){
+           
+          }
           if(e.error === 'JWTExpired'){
             localStorage.removeItem("token");
             this.toastr$.error('Sesión expirada');
@@ -89,6 +128,8 @@ export class UserFormComponent implements OnInit{
         complete: () => { },
       }
     );
+
+
 
 
 

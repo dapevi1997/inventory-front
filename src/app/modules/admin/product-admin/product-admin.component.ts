@@ -8,6 +8,7 @@ import { Branch } from 'src/app/interfaces/Branchs';
 import { BranchService } from 'src/app/services/branch.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-product-admin',
@@ -20,6 +21,7 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
   branchs: Branch[];
   formAddProduct: FormGroup;
   subscriptionToAddProduct!: Subscription;
+  excelData: BodyAddProduct[];
   
 
 
@@ -31,6 +33,7 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
   
     this.products = [];
     this.branchs = [];
+    this.excelData = [];
    
     this.formAddProduct = this.$formBuilder.group({
       branchId: ['', Validators.required],
@@ -48,18 +51,58 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getProducts();
     this.getBranchs();
-    this.$websocket.initializeWebSocketConnection("productAdded");
+    
+
+    this.subscriptionToAddProduct = this.$websocket.initializeWebSocketConnection("productAdded").subscribe(
+      (product) => {
+        this.products.push(product);
+       
+  
+      }
+    );
    
-
-   this.subscriptionToAddProduct = this.$websocket.receiveMessages().subscribe((product) => {
-      this.products.push(product);
-      console.log(this.products)
-
-    });
   }
 
   ngOnDestroy(): void {
       this.subscriptionToAddProduct.unsubscribe();
+  }
+
+  addFromExcel(event: any){
+    let file = event.target.files[0];
+    let fileReader = new FileReader();
+
+    fileReader.readAsBinaryString(file);
+
+    fileReader.onload = ()=>{
+      var workBook = XLSX.read(fileReader.result, {type:'binary'});
+      var sheetNames = workBook.SheetNames;
+      this.excelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]]);
+
+      this.excelData.forEach(data=>{
+   
+        this.$product.addProduct(data).subscribe(
+          {
+            next: (product) => {
+              console.log(product);
+            },
+            error: (e) => {
+              if(e.error === 'JWTExpired'){
+                localStorage.removeItem("token");
+                this.toastr$.error('Sesión expirada');
+                this.router$.navigate(['/login']);
+              }else{
+                this.toastr$.error("No se pudo cargar el archivo, verifique estructura");
+              }
+            },
+            complete: () => { },
+          }
+        );
+      })
+
+   
+    }
+
+console.log()
   }
 
   getBranchs() {
@@ -112,10 +155,14 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
       this.$product.addProduct(body).subscribe(
         {
           next: (product) => {
-            console.log(product);
+       
           },
           error: (e) => {
-            console.log(e)
+            if(e.error === 'JWTExpired'){
+              localStorage.removeItem("token");
+              this.toastr$.error('Sesión expirada');
+              this.router$.navigate(['/login']);
+            }
           },
           complete: () => { },
         }

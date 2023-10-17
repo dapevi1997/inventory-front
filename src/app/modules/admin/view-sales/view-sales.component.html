@@ -1,21 +1,28 @@
-<form [formGroup]="formChooseBranch">
-    <div class="form-group">
-        <label for="branchId">Selecciona la surcursal:</label>
-        <select class="form-control" id="branchId" formControlName="branchId">
-            <option *ngFor="let branch of branchs; index as i" value="{{branch.branchId}}">{{branch.branchName}}</option>
-          </select>
-    </div> 
-  </form>
+<h2 style="text-align: center;">Ver compras hechas por sucursal</h2>
+<br>
+<div class="form-container">
+    <form [formGroup]="formChooseBranch">
+        <div class="form-group">
+            <label for="branchId">Selecciona la surcursal:</label>
+            <select class="form-select" id="branchId" formControlName="branchId">
+                <option value="" disabled selected>Selecciona una sucursal</option>
+                <option *ngFor="let branch of branchs; index as i" value="{{branch.branchId}}">{{branch.branchName}}</option>
+              </select>
+        </div> 
+      </form>
+</div>
+<br>
 
 <div class="col-md-8 offset-md-3">
     <div class="card-container" *ngFor="let sale of salesDTO; index as i">
-        <h5 class="card-title">{{sale.branchName}}</h5>
+      
         <div class="card">
             <div class="card-body">
-                
+                <p class="card-text">Fecha de compra: {{sale.saleDate}}</p>
+                <p class="card-text">Tipo de compra: {{sale.saleType}}</p>
                 <p class="card-text">Nombre del producto: {{sale.productName}}</p>
-                <p class="card-text">Precio normal: {{sale.productPrice}}</p>
-                <p class="card-text">Precio con descuento: {{sale.productSalePrice}}</p>
+                <p class="card-text">Precio normal: {{sale.productPrice | currency: 'COP':'symbol':'1.0-0'}}</p>
+                <p class="card-text">Precio con descuento: {{sale.productSalePrice | currency: 'COP':'symbol':'1.0-0'}}</p>
                 <p class="card-text">Cantidad: {{sale.productSaleAmount}}</p>
             </div>
         </div>

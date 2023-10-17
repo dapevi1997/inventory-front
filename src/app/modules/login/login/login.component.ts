@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit{
      .subscribe(
       {
         next: (asnswer: AnswerLogin) => {
-          console.log(asnswer.token)
+       
           if(asnswer.token !== "" && asnswer.role !== null && asnswer.role === "ROLE_SUPERADMIN"){
             localStorage.setItem("token", asnswer.token)
 
@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit{
           if(asnswer.token !== "" && asnswer.role !== null && asnswer.role === "ROLE_USER"){
             localStorage.setItem("token", asnswer.token)
 
-            this.toastr$.success('¡Bienvenido!');
+            this.toastr$.success('¡Bienvenido! Eres un USER');
 
             this.router$.navigate(['/sales']);
 

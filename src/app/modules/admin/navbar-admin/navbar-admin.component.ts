@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-navbar-admin',
@@ -17,4 +18,6 @@ export class NavbarAdminComponent {
     localStorage.removeItem("token");
     this.toastr$.success('Sesión cerrada');
   }
+
+
 }

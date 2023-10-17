@@ -9,4 +9,5 @@ export interface ProductSale {
     price: number
     name:string
     amount: number
+    type: string
   }

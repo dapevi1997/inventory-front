@@ -14,6 +14,10 @@ export interface Sale {
     productPrice: number
     productSalePrice: number
     productSaleAmount: number
+    saleType: string
+    saleDate: string
+    saleUser: string
   }
+
 
   export type SalesDTO = SaleDTO[]

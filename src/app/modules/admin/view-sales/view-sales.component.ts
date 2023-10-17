@@ -4,6 +4,8 @@ import { BranchService } from 'src/app/services/branch.service';
 import { SaleService } from 'src/app/services/sale.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SaleDTO } from 'src/app/interfaces/Sales';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class ViewSalesComponent {
   formChooseBranch: FormGroup;
   salesDTO: SaleDTO[];
 
-  constructor(private sale$: SaleService, private branch$: BranchService,private $formBuilder: FormBuilder){
+  constructor(private sale$: SaleService, private branch$: BranchService,private $formBuilder: FormBuilder, private toastr$: ToastrService, private router$: Router){
     this.idSelectedBranch = "";
     this.branchs = []
     this.salesDTO = []
@@ -32,7 +34,7 @@ ngOnInit(): void {
   this.formChooseBranch.get('branchId')?.valueChanges.subscribe(
     (branchId: string) => {
 
-      console.log(branchId)
+
       
       if (branchId) {
         this.idSelectedBranch = branchId
@@ -51,7 +53,11 @@ getBranchs(){
         this.branchs = listBranchs;
       },
       error: (e) => {
-        console.log(e)
+        if(e.error === 'JWTExpired'){
+          localStorage.removeItem("token");
+          this.toastr$.error('Sesión expirada');
+          this.router$.navigate(['/login']);
+        }
       },
       complete: () => { },
     }
@@ -62,11 +68,15 @@ getSalesByBranchId(){
   this.sale$.getSalesByBranchId(this.idSelectedBranch).subscribe(
     {
       next: (listSales) => {
-        console.log(listSales)
+     
         this.salesDTO = listSales;
       },
       error: (e) => {
-        console.log(e)
+        if(e.error === 'JWTExpired'){
+          localStorage.removeItem("token");
+          this.toastr$.error('Sesión expirada');
+          this.router$.navigate(['/login']);
+        }
       },
       complete: () => { },
     }
