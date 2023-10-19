@@ -16,6 +16,9 @@ export class BranchService {
   getAllBranch(): Observable <Branchs>{
     let direction = environment.apiQueryService + 'api/v1/branchs';
 
+    console.log(environment.apiQueryService)
+    console.log(window._env.apiQueryService)
+
   
 
     return this.$httpClient.get<Branchs>(direction);

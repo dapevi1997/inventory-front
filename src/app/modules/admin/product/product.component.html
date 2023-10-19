@@ -1,6 +1,6 @@
 <!-- <div class="container"> -->
     <!-- <div class="row"> -->
-        <div class="col-md-8 offset-md-3">
+        <!-- <div class="col-md-8 offset-md-3"> -->
             <div class="card-container">
                 <div class="card">
                     <div class="card-body">
@@ -9,11 +9,46 @@
                         <p class="card-text">Precio: {{product.productPrice | currency: 'COP':'symbol':'1.0-0'}}</p>
                         <p class="card-text">Unidades: {{product.productInventoryStock}}</p>
                         <p class="card-text">Categoría: {{product.productCategory}}</p>
-                        <button class="btn btn-primary" (click)="addStock(product.productId)">Modificar inventario</button>
+                        <div>
+                            <button class="btn btn-primary" (click)="addStock(product.productId)">Modificar inventario</button> 
+                            <button class="btn btn-primary" style="margin-left: 4px;" 
+                            data-bs-toggle="modal" data-bs-target="" [attr.data-bs-target]="'#c' + product.productId">
+                            Mover a otra sucursal</button>
+                        </div>
+                
                     </div>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     <!-- </div> -->
 <!-- </div> -->
+
+<div class="modal fade" [id]="'c'+product.productId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar Sucursal</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="formChooseBranch">
+            <div class="mb-3">
+                <select class="form-select" id="branchId" formControlName="branchId">
+                    <option value="" disabled selected>Selecciona una sucursal</option>
+                    <option *ngFor="let branch of branchs; index as i" value="{{branch.branchId}}">{{branch.branchName}}</option>
+                  </select>
+                <div *ngIf="formChooseBranch.get('branchId')?.hasError('required') && formChooseBranch.pristine === false" style="color: red;">
+                    La sucursal es requerida</div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" (click)="changeSucursal(product.productId)" data-bs-dismiss="modal">Mover</button>
+        </div>
+      </div>
+    </div>
+  </div>
 

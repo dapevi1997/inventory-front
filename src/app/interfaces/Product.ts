@@ -17,4 +17,9 @@ export interface Product {
     productCategory: string
   }
 
+  export interface BodyMoveProduct {
+    idProduct: string
+    branchId: string
+  }
+
   export type Products = Product[]

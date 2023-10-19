@@ -23,6 +23,6 @@
       }
 
       .scrollable-list {
-        max-height: 600px; /* Establece la altura máxima a la que se mostrará la lista antes de aparecer la barra de desplazamiento */
+        max-height: 700px; /* Establece la altura máxima a la que se mostrará la lista antes de aparecer la barra de desplazamiento */
         overflow-y: auto; /* Agrega la barra de desplazamiento vertical cuando la lista excede la altura máxima */
       }

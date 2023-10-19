@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BodyAddProduct, Product, Products } from '../interfaces/Product';
+import { BodyAddProduct, BodyMoveProduct, Product, Products } from '../interfaces/Product';
 import { environment } from 'src/environments/environment';
 import { Sale } from '../interfaces/Sales';
 
@@ -38,6 +38,12 @@ export class ProductService {
       "idProduct": idProduct,
       "productInventoryStock": stock
     }
+
+    return this.$httpClient.put<any>(direction,body);
+  }
+
+  updateBranch(body: BodyMoveProduct): Observable <any>{
+    let direction = environment.apiCommandService + 'api/v1/product/move';
 
     return this.$httpClient.put<any>(direction,body);
   }

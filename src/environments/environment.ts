@@ -1,24 +1,24 @@
 export const environment = {
     production: false,
-    apiQueryService: "http://localhost:8081/",
-    apiCommandService: "http://localhost:8080/",
-    webSocketUrl : 'localhost:8082/',
-    authUrl: "http://localhost:8083/"
-
+    apiQueryService: window._env.apiQueryService,
+    apiCommandService: window._env.apiCommandService,
+    webSocketUrl : window._env.webSocketUrl ,
+    authUrl: window._env.authUrl
   };
 
 
   interface IWindowEnvironment {
-    HOST_8080: string;
-    HOST_8081: string;
-    HOST_8082: string;
+    apiQueryService: string;
+    apiCommandService: string;
+    webSocketUrl: string;
+    authUrl: string;
   }
   
-  // declare global {
-  //   interface Window {
-  //     _env: IWindowEnvironment;
-  //   }
-  // }
+  declare global {
+    interface Window {
+      _env: IWindowEnvironment;
+    }
+  }
   
   // export const environment = {
   //   HOST_8080: window._env.HOST_8080,

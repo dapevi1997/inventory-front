@@ -9,6 +9,7 @@ import { BranchService } from 'src/app/services/branch.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
+import { filter, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-admin',
@@ -21,7 +22,10 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
   branchs: Branch[];
   formAddProduct: FormGroup;
   subscriptionToAddProduct!: Subscription;
+  subscriptionToMoveProduct!: Subscription;
   excelData: BodyAddProduct[];
+  idSelectedBranch: string;
+  idSelectedBranchModal: string;
   
 
 
@@ -34,6 +38,8 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
     this.products = [];
     this.branchs = [];
     this.excelData = [];
+    this.idSelectedBranch = "";
+    this.idSelectedBranchModal = "";
    
     this.formAddProduct = this.$formBuilder.group({
       branchId: ['', Validators.required],
@@ -49,8 +55,39 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getProducts();
+    
     this.getBranchs();
+
+    if(this.branchs.length === 0){
+      this.toastr$.warning('No se ha seleccionado sucursal');
+    }
+
+    this.formAddProduct.get('branchId')?.valueChanges.subscribe(
+
+      {
+        next: (branchId: string) => {
+        
+            if (branchId) {
+              this.idSelectedBranch = branchId
+              this.getProductsByIdBranch(branchId);
+          
+            
+            } 
+    
+        
+        },
+        error: (e) => {
+          if(e.error === 'JWTExpired'){
+            localStorage.removeItem("token");
+            this.toastr$.error('Sesión expirada');
+            this.router$.navigate(['/login']);
+          }
+        },
+        complete: () => { },
+      }
+
+
+    );
     
 
     this.subscriptionToAddProduct = this.$websocket.initializeWebSocketConnection("productAdded").subscribe(
@@ -60,11 +97,52 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
   
       }
     );
+
+    this.subscriptionToMoveProduct = this.$websocket.initializeWebSocketConnection("productMoved").subscribe(
+      (product)=>{
+        //products
+        //let productAux = this.products.filter(p => product.idProduct !== p.productId)
+        this.getProductsByIdBranch(this.idSelectedBranch);
+    
+        console.log(product.branchId)
+      }
+    );
    
   }
 
   ngOnDestroy(): void {
       this.subscriptionToAddProduct.unsubscribe();
+  }
+
+  getProductsByIdBranch(idbranch: string){
+    this.$product.getAllProduts().pipe(
+      map((products) =>{ 
+
+    
+    
+       return products.filter((product) => {
+      
+         return product.branchId === idbranch
+       }
+      
+       )
+
+      })
+    ).subscribe((listProducts)=>{
+     if(listProducts.length === 0){
+      this.products = [];
+      this.toastr$.warning('Al parecer aún no se han asignado productos a esta sucursal. Contacta con un administrador');
+     }else{
+      this.products = listProducts;
+     }
+      
+
+  
+      
+      
+    }
+     
+    )
   }
 
   addFromExcel(event: any){
