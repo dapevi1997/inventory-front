@@ -19,7 +19,8 @@ export class ViewSalesComponent {
   formChooseBranch: FormGroup;
   salesDTO: SaleDTO[];
 
-  constructor(private sale$: SaleService, private branch$: BranchService,private $formBuilder: FormBuilder, private toastr$: ToastrService, private router$: Router){
+  constructor(private sale$: SaleService, private branch$: BranchService, 
+    private $formBuilder: FormBuilder, private toastr$: ToastrService, private router$: Router){
     this.idSelectedBranch = "";
     this.branchs = []
     this.salesDTO = []
@@ -31,6 +32,7 @@ export class ViewSalesComponent {
 
 ngOnInit(): void {
   this.getBranchs()
+  
   this.formChooseBranch.get('branchId')?.valueChanges.subscribe(
     (branchId: string) => {
 

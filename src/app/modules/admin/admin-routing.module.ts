@@ -5,6 +5,7 @@ import { ProductAdminComponent } from './product-admin/product-admin.component';
 import { BranchAdminComponent } from './branch-admin/branch-admin.component';
 import { SalesAdminComponent } from './sales-admin/sales-admin.component';
 import { ViewSalesComponent } from './view-sales/view-sales.component';
+import { ReportsComponent } from './reports/reports.component';
 // import { GraficaComponent } from './grafica/grafica.component';
 // import { ListaRadaresComponent } from './lista-radares/lista-radares.component';
 // import { PromediosComponent } from './promedios/promedios.component';
@@ -33,6 +34,9 @@ const routes: Routes = [
     },
     {
       path:"sales/view-sales", component: ViewSalesComponent
+    },
+    {
+      path:"products/reports", component: ReportsComponent
     }
     // {
     //   path:"list-radars", component: ListaRadaresComponent

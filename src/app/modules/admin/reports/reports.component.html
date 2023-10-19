@@ -1,0 +1,54 @@
+<div>
+    <h2 style="text-align: center;">Generar reporte de inventario por sucursal</h2>
+    <button class="btn-dark" style="margin-right: 5px;" (click)="onPrint()">Imprimir informe</button>
+</div>
+
+<br>
+<div class="form-container">
+    <form [formGroup]="formChooseBranch">
+        <div class="mb-3">
+            <label for="branchId">Flitrar por surcursal:</label>
+            <select class="form-select" id="branchId" formControlName="branchId">
+                <option value="" disabled selected>Selecciona una sucursal</option>
+                <option value="all">Todas las sucursales</option>
+                <option *ngFor="let branch of branchs; index as i" value="{{branch.branchId}}">{{branch.branchName}}</option>
+              </select>
+        </div> 
+        <div class="mb-3">
+            <label for="category">Flitrar por categoría:</label>
+            <input id="category" [formControl]="productCategoryControl" (ngModelChange)="onChange()" type="text" class="form-control" aria-describedby="emailHelp" formControlName="productCategory"
+                placeholder="Categoría del producto" />
+              
+        </div>
+      </form>
+</div>
+<br>
+
+<div class="container">
+    <h1>Productos</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Inventario</th>
+          <th>Categoría</th>
+          <th>Sucursal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.productName }}</td>
+          <td>{{ product.productDescription }}</td>
+          <td>{{ product.productPrice | currency: 'COP':'symbol':'1.0-0'}}</td>
+          <td>{{ product.productInventoryStock }}</td>
+          <td>{{ product.productCategory }}</td>
+          <td>{{ product.nameBranch}}</td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+

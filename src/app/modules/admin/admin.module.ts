@@ -12,6 +12,7 @@ import { SalesAdminComponent } from './sales-admin/sales-admin.component';
 import { SalesComponent } from './sales/sales.component';
 import { ProductInCarComponent } from './product-in-car/product-in-car.component';
 import { ViewSalesComponent } from './view-sales/view-sales.component';
+import { ReportsComponent } from './reports/reports.component';
 
 
 
@@ -28,6 +29,7 @@ import { ViewSalesComponent } from './view-sales/view-sales.component';
     SalesComponent,
     ProductInCarComponent,
     ViewSalesComponent,
+    ReportsComponent,
    
   ],
   imports: [

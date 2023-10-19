@@ -112,6 +112,7 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
       this.subscriptionToAddProduct.unsubscribe();
+      this.subscriptionToMoveProduct.unsubscribe();
   }
 
   getProductsByIdBranch(idbranch: string){
@@ -206,6 +207,7 @@ console.log()
       {
         next: (listProduts) => {
           this.products = listProduts;
+          
         },
         error: (e) => {
           if(e.error === 'JWTExpired'){

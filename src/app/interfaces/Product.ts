@@ -5,7 +5,8 @@ export interface Product {
     productDescription: string
     productPrice: number
     productInventoryStock: number
-    productCategory: string
+    productCategory: string,
+    nameBranch?: string
   }
 
   export interface BodyAddProduct {
